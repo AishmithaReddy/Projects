@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Story Genre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url('https://source.unsplash.com/1600x900/?galaxy,mystery') no-repeat center center/cover;
+            color: white;
+            padding: 100px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 2em;
+        }
+        .genre-btn {
+            display: block;
+            margin: 10px auto;
+            padding: 12px;
+            background: linear-gradient(135deg, #ff5733, #c70039);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: 0.3s;
+        }
+        .genre-btn:hover {
+            background: linear-gradient(135deg, #c70039, #900c3f);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Your Story Genre</h1>
+        <button class="genre-btn" onclick="location.href='fantasy.html'">Fantasy</button>
+        <button class="genre-btn" onclick="location.href='sci-fi.html'">Sci-Fi</button>
+        <button class="genre-btn" onclick="location.href='horror.html'">Horror</button>
+        <button class="genre-btn" onclick="location.href='mystery.html'">Mystery</button>
+    </div>
+</body>
+</html>

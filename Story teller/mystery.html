@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Story</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Spectral+SC&display=swap');
+        
+        body {
+            font-family: 'Spectral SC', serif;
+            background: url('https://source.unsplash.com/1600x900/?detective,mystery') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        #story-container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.7);
+        }
+        .option {
+            display: block;
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            padding: 12px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 8px;
+            color: black;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+        .option:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #B8860B, #8B4513);
+        }
+        #story-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="story-container">
+        <h2 id="story-text">A famous jewel has been stolen from the city museum. You, a brilliant detective, are on the case. What’s your first move?</h2>
+        <img id="story-image" src="https://source.unsplash.com/800x500/?magnifying-glass,crime" alt="Story Scene">
+        <button class="option" onclick="chooseOption(1)">Examine the crime scene</button>
+        <button class="option" onclick="chooseOption(2)">Question the museum staff</button>
+        <button class="option" onclick="chooseOption(3)">Check the security footage</button>
+    </div>
+
+    <script>
+        const story = {
+            1: { text: "The glass case is shattered, but there are no fingerprints. Suspicious...", image: "https://source.unsplash.com/800x500/?museum,crime-scene", options: [
+                { text: "Look for footprints", next: 4 },
+                { text: "Examine the broken glass", next: 5 }
+            ]},
+            2: { text: "The night guard seems nervous. He says he saw a shadow...", image: "https://source.unsplash.com/800x500/?interrogation,dark", options: [
+                { text: "Press him for more details", next: 6 },
+                { text: "Check his alibi", next: 7 }
+            ]},
+            3: { text: "The footage is corrupted, but a figure in a hat is visible for a moment.", image: "https://source.unsplash.com/800x500/?cctv,mystery", options: [
+                { text: "Try to enhance the footage", next: 8 },
+                { text: "Search for eyewitnesses", next: 9 }
+            ]},
+            4: { text: "The footprints lead to a back exit... and disappear into the rain.", image: "https://source.unsplash.com/800x500/?footsteps,rain", options: [] },
+            5: { text: "The glass was broken from the inside. Was it an inside job?", image: "https://source.unsplash.com/800x500/?broken-glass,crime", options: [] },
+            6: { text: "Under pressure, the guard confesses that he saw someone slip a note under the door.", image: "https://source.unsplash.com/800x500/?letter,mystery", options: [] },
+            7: { text: "The guard's alibi checks out. But then why was he so nervous?", image: "https://source.unsplash.com/800x500/?thinking,detective", options: [] },
+            8: { text: "The enhanced footage reveals a tattoo on the suspect’s wrist. A vital clue!", image: "https://source.unsplash.com/800x500/?tattoo,crime", options: [] },
+            9: { text: "A street vendor claims he saw someone running away at midnight...", image: "https://source.unsplash.com/800x500/?street,night", options: [] }
+        };
+
+        function chooseOption(option) {
+            let nextStep = story[option];
+            if (nextStep) {
+                document.getElementById('story-text').textContent = nextStep.text;
+                document.getElementById('story-image').src = nextStep.image;
+                let container = document.getElementById('story-container');
+                container.innerHTML = `<h2 id='story-text'>${nextStep.text}</h2><img id='story-image' src='${nextStep.image}' alt='Story Scene'>`;
+                nextStep.options.forEach(opt => {
+                    let btn = document.createElement('button');
+                    btn.className = 'option';
+                    btn.textContent = opt.text;
+                    btn.onclick = () => chooseOption(opt.next);
+                    container.appendChild(btn);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

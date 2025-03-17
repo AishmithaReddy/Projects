@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sci-Fi Story</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: url('https://source.unsplash.com/1600x900/?space,galaxy') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        #story-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+        }
+        .option {
+            display: block;
+            background: linear-gradient(135deg, #00d4ff, #0077ff);
+            padding: 12px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+        .option:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #0077ff, #0044cc);
+        }
+        #story-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="story-container">
+        <h2 id="story-text">You wake up aboard a drifting spaceship. The AI is malfunctioning. What do you do?</h2>
+        <img id="story-image" src="https://source.unsplash.com/800x500/?spaceship,galaxy" alt="Story Scene">
+        <button class="option" onclick="chooseOption(1)">Try to fix the AI</button>
+        <button class="option" onclick="chooseOption(2)">Search for other crew members</button>
+        <button class="option" onclick="chooseOption(3)">Send a distress signal</button>
+    </div>
+
+    <script>
+        const story = {
+            1: { text: "You access the AI core. The system warns of an incoming asteroid!", image: "https://source.unsplash.com/800x500/?ai,technology", options: [
+                { text: "Attempt manual override", next: 4 },
+                { text: "Shut down the AI", next: 5 }
+            ]},
+            2: { text: "You find the captain's log. It hints at a hidden danger aboard...", image: "https://source.unsplash.com/800x500/?space,crew", options: [
+                { text: "Investigate the ship", next: 6 },
+                { text: "Arm yourself", next: 7 }
+            ]},
+            3: { text: "Your distress signal is received by an unknown entity...", image: "https://source.unsplash.com/800x500/?alien,planet", options: [
+                { text: "Make contact", next: 8 },
+                { text: "Shut off communications", next: 9 }
+            ]},
+            4: { text: "You barely manage to avoid the asteroid, but the ship is damaged.", image: "https://source.unsplash.com/800x500/?spaceship,crash", options: [
+                { text: "Repair the ship", next: 10 },
+                { text: "Send an SOS", next: 11 }
+            ]},
+            5: { text: "The AI shuts down... but something else takes control.", image: "https://source.unsplash.com/800x500/?mystery,robot", options: [] },
+            6: { text: "You uncover a conspiracy! The ship was never meant to return...", image: "https://source.unsplash.com/800x500/?secret,files", options: [] },
+            7: { text: "An unknown lifeform is onboard. You prepare for battle!", image: "https://source.unsplash.com/800x500/?alien,fight", options: [] },
+            8: { text: "The entity offers an alliance. Do you accept?", image: "https://source.unsplash.com/800x500/?extraterrestrial,contact", options: [] },
+            9: { text: "Your transmission is intercepted. You are no longer alone...", image: "https://source.unsplash.com/800x500/?danger,spaceship", options: [] },
+            10: { text: "You successfully repair the ship and chart a new course!", image: "https://source.unsplash.com/800x500/?stars,galaxy", options: [] },
+            11: { text: "A rogue fleet responds to your SOS. Are they friend or foe?", image: "https://source.unsplash.com/800x500/?fleet,spaceships", options: [] }
+        };
+
+        function chooseOption(option) {
+            let nextStep = story[option];
+            if (nextStep) {
+                document.getElementById('story-text').textContent = nextStep.text;
+                document.getElementById('story-image').src = nextStep.image;
+                let container = document.getElementById('story-container');
+                container.innerHTML = `<h2 id='story-text'>${nextStep.text}</h2><img id='story-image' src='${nextStep.image}' alt='Story Scene'>`;
+                nextStep.options.forEach(opt => {
+                    let btn = document.createElement('button');
+                    btn.className = 'option';
+                    btn.textContent = opt.text;
+                    btn.onclick = () => chooseOption(opt.next);
+                    container.appendChild(btn);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

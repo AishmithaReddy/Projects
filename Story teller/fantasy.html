@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Story</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+        
+        body {
+            font-family: 'MedievalSharp', cursive;
+            background: url('https://source.unsplash.com/1600x900/?fantasy,castle') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        #story-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+        }
+        .option {
+            display: block;
+            background: linear-gradient(135deg, #ff9800, #ff5733);
+            padding: 12px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+        .option:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ff5733, #c70039);
+        }
+        #story-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="story-container">
+        <h2 id="story-text">You arrive at an ancient kingdom. A dragon blocks your path. What do you do?</h2>
+        <img id="story-image" src="https://source.unsplash.com/800x500/?dragon,castle" alt="Story Scene">
+        <button class="option" onclick="chooseOption(1)">Fight the dragon</button>
+        <button class="option" onclick="chooseOption(2)">Try to befriend it</button>
+        <button class="option" onclick="chooseOption(3)">Find another way around</button>
+    </div>
+
+    <script>
+        const story = {
+            1: { text: "You draw your sword and charge at the dragon!", image: "https://source.unsplash.com/800x500/?sword,warrior", options: [
+                { text: "Dodge its fire attack", next: 4 },
+                { text: "Strike its wing", next: 5 }
+            ]},
+            2: { text: "You speak to the dragon in an ancient tongue... It listens.", image: "https://source.unsplash.com/800x500/?mystic,dragon", options: [
+                { text: "Offer it food", next: 6 },
+                { text: "Ask for a ride", next: 7 }
+            ]},
+            3: { text: "You search for another route and find a hidden cave...", image: "https://source.unsplash.com/800x500/?cave,magic", options: [
+                { text: "Enter the cave", next: 8 },
+                { text: "Turn back to the kingdom", next: 9 }
+            ]},
+            4: { text: "You skillfully dodge the flames, but the dragon is relentless!", image: "https://source.unsplash.com/800x500/?fire,dragon", options: [
+                { text: "Find cover", next: 10 },
+                { text: "Strike again", next: 11 }
+            ]},
+            5: { text: "You hit the dragon's wing! It crashes to the ground.", image: "https://source.unsplash.com/800x500/?fallen,dragon", options: [
+                { text: "Show mercy", next: 12 },
+                { text: "Finish the fight", next: 13 }
+            ]},
+            6: { text: "The dragon happily eats your offering and allows you to pass.", image: "https://source.unsplash.com/800x500/?peaceful,dragon", options: [] },
+            7: { text: "The dragon takes you on an aerial adventure!", image: "https://source.unsplash.com/800x500/?sky,flying", options: [] },
+            8: { text: "The cave leads to an underground kingdom!", image: "https://source.unsplash.com/800x500/?underground,castle", options: [] },
+            9: { text: "You return home safely, but with no treasure.", image: "https://source.unsplash.com/800x500/?castle,sunset", options: [] },
+            10: { text: "You find a shield to block the flames!", image: "https://source.unsplash.com/800x500/?shield,knight", options: [] },
+            11: { text: "With one final strike, you defeat the dragon!", image: "https://source.unsplash.com/800x500/?victory,warrior", options: [] },
+            12: { text: "The dragon bows before you, recognizing your honor.", image: "https://source.unsplash.com/800x500/?honor,knight", options: [] },
+            13: { text: "You claim victory, but at what cost?", image: "https://source.unsplash.com/800x500/?fallen,warrior", options: [] }
+        };
+
+        function chooseOption(option) {
+            let nextStep = story[option];
+            if (nextStep) {
+                document.getElementById('story-text').textContent = nextStep.text;
+                document.getElementById('story-image').src = nextStep.image;
+                let container = document.getElementById('story-container');
+                container.innerHTML = `<h2 id='story-text'>${nextStep.text}</h2><img id='story-image' src='${nextStep.image}' alt='Story Scene'>`;
+                nextStep.options.forEach(opt => {
+                    let btn = document.createElement('button');
+                    btn.className = 'option';
+                    btn.textContent = opt.text;
+                    btn.onclick = () => chooseOption(opt.next);
+                    container.appendChild(btn);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
